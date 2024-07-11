@@ -1,18 +1,17 @@
 <script>
     export let unitName;
     export let movement;
-    export let ws;
-    export let bs;
-    export let strength;
     export let toughness;
     export let wounds;
-    export let attacks;
     export let leadership;
     export let save;
+    export let objectiveControl;
     export let wargearOptions;
     export let abilities;
     export let factionKeywords;
     export let keywords;
+    export let meleeWeapons = [];
+    export let rangedWeapons = [];
 </script>
 
 <style>
@@ -64,25 +63,19 @@
     <table>
         <tr>
             <th>M</th>
-            <th>WS</th>
-            <th>BS</th>
-            <th>S</th>
             <th>T</th>
             <th>W</th>
-            <th>A</th>
             <th>Ld</th>
             <th>Sv</th>
+            <th>OC</th>
         </tr>
         <tr>
             <td>{movement}</td>
-            <td>{ws}</td>
-            <td>{bs}</td>
-            <td>{strength}</td>
             <td>{toughness}</td>
             <td>{wounds}</td>
-            <td>{attacks}</td>
             <td>{leadership}</td>
             <td>{save}</td>
+            <td>{objectiveControl}</td>
         </tr>
     </table>
 
@@ -99,6 +92,54 @@
             <li><strong>{ability.name}:</strong> {ability.description}</li>
         {/each}
     </ul>
+
+    <h2>Melee Weapons</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Range</th>
+            <th>WS</th>
+            <th>Strength</th>
+            <th>AP</th>
+            <th>Damage</th>
+            <th>Weapon Keywords</th>
+        </tr>
+        {#each meleeWeapons as weapon}
+        <tr>
+            <td>{weapon.name}</td>
+            <td>{weapon.range}</td>
+            <td>{weapon.ws}</td>
+            <td>{weapon.strength}</td>
+            <td>{weapon.ap}</td>
+            <td>{weapon.damage}</td>
+            <td>{weapon.weaponKeywords.join(", ")}</td>
+        </tr>
+        {/each}
+    </table>
+
+    <h2>Ranged Weapons</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Range</th>
+            <th>BS</th>
+            <th>Strength</th>
+            <th>AP</th>
+            <th>Damage</th>
+            <th>Weapon Keywords</th>
+        </tr>
+        {#each rangedWeapons as weapon}
+        <tr>
+            <td>{weapon.name}</td>
+            <td>{weapon.range}</td>
+            <td>{weapon.bs}</td>
+            <td>{weapon.strength}</td>
+            <td>{weapon.ap}</td>
+            <td>{weapon.damage}</td>
+            <td>{weapon.weaponKeywords.join(", ")}</td>
+        </tr>
+        {/each}
+    </table>
 
     <h2>Faction Keywords</h2>
     <p>{factionKeywords.join(", ")}</p>

@@ -6,14 +6,11 @@
     let yamlInput = `
 - unitName: Space Marine Tactical Squad
   movement: 6"
-  ws: 3+
-  bs: 3+
-  strength: 4
   toughness: 4
   wounds: 1
-  attacks: 1
   leadership: 7
   save: 3+
+  objectiveControl: 2
   wargearOptions:
     - Any model may take a Boltgun.
     - The Sergeant may replace his Bolt Pistol with a Chainsword.
@@ -29,6 +26,41 @@
   keywords:
     - Infantry
     - Tactical Squad
+  meleeWeapons:
+    - name: Chainsword
+      range: Melee
+      ws: 3+
+      strength: User
+      ap: 0
+      damage: 1
+      weaponKeywords:
+        - Melee
+    - name: Power Fist
+      range: Melee
+      ws: 4+
+      strength: x2
+      ap: -3
+      damage: D3
+      weaponKeywords:
+        - Melee
+  rangedWeapons:
+    - name: Boltgun
+      range: 24"
+      bs: 3+
+      strength: 4
+      ap: 0
+      damage: 1
+      weaponKeywords:
+        - Rapid Fire 1
+    - name: Plasma Gun
+      range: 24"
+      bs: 3+
+      strength: 7
+      ap: -3
+      damage: 1
+      weaponKeywords:
+        - Rapid Fire 1
+        - Overheat
 `;
     let datasheets = [];
 
@@ -58,7 +90,7 @@
     }
     textarea {
         width: 100%;
-        height: 200px;
+        height: 300px;
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
