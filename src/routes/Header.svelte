@@ -6,7 +6,7 @@
 
 <header>
 	<div class="corner">
-		<img class="logo" src={logo} alt="Datasheet Generator" />
+		<img class="logo" src={logo} alt="DakkaSheet Generator" />
 	</div>
 
 	
