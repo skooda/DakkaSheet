@@ -11,7 +11,7 @@
 
 	
 	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
+		<a href="https://github.com/skooda/DakkaSheet">
 			<img src={github} alt="GitHub" />
 		</a>
 	</div>
