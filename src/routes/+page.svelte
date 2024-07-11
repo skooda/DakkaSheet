@@ -1,54 +1,48 @@
 <script>
     import { onMount } from 'svelte';
     import Datasheet from './Datasheet.svelte';
+    import yaml from 'js-yaml';
 
-    let csvInput = `Space Marine Tactical Squad,6",3+,3+,4,4,1,1,7,3+,Any model may take a Boltgun.;The Sergeant may replace his Bolt Pistol with a Chainsword.;Up to two models may take a special weapon.,And They Shall Know No Fear:You can re-roll failed Morale tests for this unit.;Combat Squads:Before any models are deployed at the start of the game, a Tactical Squad containing 10 models may be split into two units, each containing 5 models.,Imperium;Adeptus Astartes,Infantry;Tactical Squad`;
+    let yamlInput = `
+- unitName: Space Marine Tactical Squad
+  movement: 6"
+  ws: 3+
+  bs: 3+
+  strength: 4
+  toughness: 4
+  wounds: 1
+  attacks: 1
+  leadership: 7
+  save: 3+
+  wargearOptions:
+    - Any model may take a Boltgun.
+    - The Sergeant may replace his Bolt Pistol with a Chainsword.
+    - Up to two models may take a special weapon.
+  abilities:
+    - name: And They Shall Know No Fear
+      description: You can re-roll failed Morale tests for this unit.
+    - name: Combat Squads
+      description: Before any models are deployed at the start of the game, a Tactical Squad containing 10 models may be split into two units, each containing 5 models.
+  factionKeywords:
+    - Imperium
+    - Adeptus Astartes
+  keywords:
+    - Infantry
+    - Tactical Squad
+`;
     let datasheets = [];
 
-    const parseCSV = () => {
-        datasheets = csvInput.trim().split('\n').map(line => {
-            const [
-                unitName,
-                movement,
-                ws,
-                bs,
-                strength,
-                toughness,
-                wounds,
-                attacks,
-                leadership,
-                save,
-                wargearOptions,
-                abilities,
-                factionKeywords,
-                keywords
-            ] = line.split(',');
-
-            return {
-                unitName,
-                movement,
-                ws,
-                bs,
-                strength: parseInt(strength),
-                toughness: parseInt(toughness),
-                wounds: parseInt(wounds),
-                attacks: parseInt(attacks),
-                leadership: parseInt(leadership),
-                save,
-                wargearOptions: wargearOptions.split(';'),
-                abilities: abilities.split(';').map(a => {
-                    const [name, description] = a.split(':');
-                    return { name, description };
-                }),
-                factionKeywords: factionKeywords.split(';'),
-                keywords: keywords.split(';')
-            };
-        });
+    const parseYAML = () => {
+        try {
+            datasheets = yaml.load(yamlInput);
+        } catch (e) {
+            console.error(e);
+        }
     };
 
-    // Parse the initial CSV input on mount
+    // Parse the initial YAML input on mount
     onMount(() => {
-        parseCSV();
+        parseYAML();
     });
 </script>
 
@@ -64,13 +58,12 @@
     }
     textarea {
         width: 100%;
-        height: 100px;
+        height: 200px;
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
         font-family: Arial, sans-serif;
         margin-bottom: 10px;
-		text-wrap: nowrap;
     }
     button {
         padding: 10px 15px;
@@ -87,8 +80,8 @@
 </style>
 
 <div class="input-area">
-    <textarea bind:value={csvInput} placeholder="Enter CSV data here..."></textarea>
-    <button on:click={parseCSV}>Generate Datasheets</button>
+    <textarea bind:value={yamlInput} placeholder="Enter YAML data here..."></textarea>
+    <button on:click={parseYAML}>Generate Datasheets</button>
 </div>
 
 {#each datasheets as datasheet}
